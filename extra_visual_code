@@ -1,0 +1,40 @@
+-- View mean BMI for extra insight form databse 
+
+ods graphics / reset width=6.4in height=4.8in imagemap;
+
+proc sort data=WORK.IMPORT out=_BarChartTaskData;
+	by Dim1;
+run;
+
+proc sgplot data=_BarChartTaskData;
+	by Dim1;
+	vbar FactValueNumeric / fillattrs=(color=CX7b9fd6) fillType=gradient 
+		dataskin=gloss;
+	yaxis grid;
+run;
+
+ods graphics / reset;
+
+proc datasets library=WORK noprint;
+	delete _BarChartTaskData;
+	run;
+  
+  
+ods graphics / reset width=6.4in height=4.8in imagemap;
+
+proc sort data=WORK.IMPORT out=_BarChartTaskData;
+	by Location;
+run;
+
+proc sgplot data=_BarChartTaskData;
+	by Location;
+	vbar FactValueNumeric / fillattrs=(color=CX7b9fd6) fillType=gradient 
+		dataskin=gloss;
+	yaxis grid;
+run;
+
+ods graphics / reset;
+
+proc datasets library=WORK noprint;
+	delete _BarChartTaskData;
+	run;

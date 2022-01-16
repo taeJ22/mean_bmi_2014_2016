@@ -1,0 +1,35 @@
+-- Run an analysis of North American and then Australian mean BMI 
+--  Dataset https://www.who.int/data/gho/data/indicators/indicator-details/GHO/mean-bmi-(kg-m-)-(age-standardized-estimate) 
+
+ods noproctitle;
+ods graphics / imagemap=on;
+
+proc sort data=WORK.IMPORT out=WORK.TempSorted2236;
+	by Period;
+run;
+
+proc means data=WORK.TempSorted2236 chartype mean std min max n vardef=df;
+	var FactValueNumeric;
+	by Period;
+run;
+
+proc datasets library=WORK noprint;
+	delete TempSorted2236;
+	run;
+
+-- run again with location segmented 
+ods noproctitle;
+ods graphics / imagemap=on;
+
+proc sort data=WORK.IMPORT out=WORK.TempSorted2236;
+	by Period;
+run;
+
+proc means data=WORK.TempSorted2236 chartype mean std min max n vardef=df;
+	var FactValueNumeric;
+	by Period;
+run;
+
+proc datasets library=WORK noprint;
+	delete TempSorted2236;
+	run;

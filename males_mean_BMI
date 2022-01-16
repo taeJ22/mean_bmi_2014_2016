@@ -1,0 +1,19 @@
+-- Segment results by gender (in addition to year and location) using SAS sum statistics 
+-- Dataset https://www.who.int/data/gho/data/indicators/indicator-details/GHO/mean-bmi-(kg-m-)-(age-standardized-estimate) 
+
+ods noproctitle;
+ods graphics / imagemap=on;
+
+proc sort data=WORK.IMPORT out=WORK.TempSorted2236;
+	by Location Period;
+run;
+
+proc means data=WORK.TempSorted2236 chartype mean std min max n vardef=df;
+	var FactValueNumeric;
+	class Dim1;
+	by Location Period;
+run;
+
+proc datasets library=WORK noprint;
+	delete TempSorted2236;
+	run;
